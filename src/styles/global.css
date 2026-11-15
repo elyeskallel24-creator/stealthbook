@@ -1,0 +1,159 @@
+:root {
+  --tint: 0.68;
+  --frame-bg: 0.04;
+  --art-blur: 3.5px;
+  --glass: rgba(0, 0, 0, 0.30);
+  --glass-hover: rgba(255, 255, 255, 0.04);
+  --glass-strong: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --text-0: #f2f2f2;
+  --text-1: #b4b4ba;
+  --text-2: #a0a0a8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  width: 100%; height: 100%;
+  background: transparent;
+  color: var(--text-0);
+  font-family: 'Roboto Mono', monospace;
+  overflow: hidden;
+  user-select: none;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, var(--tint));
+  pointer-events: none;
+  z-index: 0;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-2); }
+::selection { background: rgba(255,255,255,0.2); color: var(--text-0); }
+
+.titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  background: rgba(0,0,0,0.45);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(4px);
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+}
+
+.titlebar-drag {
+  -webkit-app-region: drag;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  gap: 8px;
+  flex: 1;
+  height: 100%;
+}
+
+.titlebar-logo { width: 16px; height: 16px; object-fit: contain; }
+.titlebar-title { font-size: 12px; font-weight: 500; color: var(--text-1); }
+
+.titlebar-controls {
+  display: flex;
+  height: 100%;
+  -webkit-app-region: no-drag;
+}
+
+.titlebar-btn {
+  width: 46px;
+  height: 100%;
+  background: transparent;
+  border: none;
+  color: var(--text-1);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.titlebar-btn:hover { background: var(--glass-hover); color: var(--text-0); }
+.titlebar-btn.close:hover { background: rgba(255,255,255,0.1); }
+
+.glass {
+  background: rgba(0,0,0,0.30);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(4px);
+  border-radius: 16px;
+}
+
+.glass-btn {
+  position: relative;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(4px);
+  border-radius: 999px;
+  padding: 10px 20px;
+  color: var(--text-0);
+  font-family: 'Roboto Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.glass-btn:hover {
+  background: var(--glass-hover);
+  border-color: var(--border-strong);
+}
+
+.glass-btn:active {
+  transform: scale(0.97);
+}
+
+/* Room Card & Art Overrides */
+.room-card {
+  background: rgba(0, 0, 0, var(--frame-bg)) !important;
+  backdrop-filter: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  transition: border-color 0.2s ease;
+}
+
+.room-card:hover {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.room-art-wrapper {
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: screen;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.room-art {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+  opacity: 1;
+  filter: blur(var(--art-blur, 6px));
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+.room-card:hover .room-art {
+  transform: scale(1.14);
+}
